@@ -186,7 +186,7 @@ class HomePage extends ConsumerWidget {
     final List<Movie> _movies = [];
     for (var i = 0; i < 20; i++) {
       _movies.add(Movie(
-        name: "Alina Жопка",
+        name: "Alina Жопка САМАЯ ВРЕДНАЯ",
         language: "RU",
         isAdult: false,
         description: 'Алина лучшая жопка из всех жопок в мире живущих',
@@ -208,10 +208,16 @@ class HomePage extends ConsumerWidget {
                   vertical: _deviceHeight * 0.01, horizontal: 0),
               child: GestureDetector(
                 onTap: () {},
-                child: MovieTile(
-                  height: _deviceHeight * 0.2,
-                  width: _deviceWidth * 0.85,
-                  movie: _movies[_count],
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: MovieTile(
+                    height: _deviceHeight * 0.2,
+                    width: _deviceWidth * 0.85,
+                    movie: _movies[_count],
+                  ).animate().flip(),
                 ),
               ),
             );
