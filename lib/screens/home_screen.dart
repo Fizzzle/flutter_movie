@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../models/movie.dart';
 import '../models/search_category.dart';
 
 class HomePage extends ConsumerWidget {
@@ -70,6 +72,13 @@ class HomePage extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _topBarWidget().animate().fade(),
+          Container(
+            height: _deviceHeight * 0.83,
+            padding: EdgeInsets.symmetric(
+              vertical: _deviceHeight * 0.01,
+            ),
+            child: _moviesListViewWidget(),
+          ),
         ],
       ),
     );
@@ -166,5 +175,43 @@ class HomePage extends ConsumerWidget {
         ),
       ],
     );
+  }
+
+  Widget _moviesListViewWidget() {
+    final List<Movie> _movies = [];
+    for (var i = 0; i < 20; i++) {
+      _movies.add(Movie(
+        name: "Alina Жопка",
+        language: "RU",
+        isAdult: false,
+        description: 'Алина лучшая жопка из всех жопок в мире живущих',
+        posterPath: '/iwsMu0ehRPbtaSxqiaUDQB9qMWT.jpg',
+        backdropPath: '/rMvPXy8PUjj1o8o1pzgQbdNCsvj.jpg',
+        rating: 6.7,
+        realeaseDate: '26-07-1995',
+        id: 1,
+      ));
+    }
+
+    if (_movies.length != 0) {
+      return ListView.builder(
+          physics: BouncingScrollPhysics(),
+          itemCount: _movies.length,
+          itemBuilder: (BuildContext _context, int _count) {
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: _deviceHeight * 0.01, horizontal: 0),
+              child: GestureDetector(
+                onTap: () {},
+                child: Text(_movies[_count].name),
+              ),
+            );
+          });
+    } else {
+      return Center(
+        child: LoadingAnimationWidget.discreteCircle(
+            color: Colors.black, size: _deviceHeight * 0.2),
+      );
+    }
   }
 }
